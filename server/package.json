@@ -1,0 +1,31 @@
+{
+  "name": "rpa-platform-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend services for RPA Platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "webhook": "node webhook-server.js",
+    "webhook:dev": "node --watch webhook-server.js",
+    "dev:all": "concurrently \"npm run dev\" \"npm run webhook:dev\"",
+    "test:integration": "node test-integration.js",
+    "test:webhooks": "node test-webhooks.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.55.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "node-fetch": "^3.3.2",
+    "svix": "^1.73.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.0"
+  }
+}

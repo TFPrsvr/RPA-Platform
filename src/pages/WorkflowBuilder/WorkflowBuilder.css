@@ -1,0 +1,391 @@
+.workflow-builder {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+}
+
+.builder-header {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.workflow-info {
+  flex: 1;
+  max-width: 20%;
+}
+
+.workflow-name-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.workflow-description-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.builder-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cancel-btn:hover,
+.save-btn:hover {
+  opacity: 0.8;
+}
+
+.builder-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.sidebar-description {
+  margin: 0 0 1.5rem 0;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  cursor: grab;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.action-item:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+.action-item.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.action-icon {
+  font-size: 1.2rem;
+}
+
+.action-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.canvas {
+  flex: 1;
+  padding: 1.5rem;
+  overflow: auto;
+  position: relative;
+}
+
+.canvas.drag-over {
+  background: linear-gradient(45deg, #f0f8ff 25%, transparent 25%),
+              linear-gradient(-45deg, #f0f8ff 25%, transparent 25%),
+              linear-gradient(45deg, transparent 75%, #f0f8ff 75%),
+              linear-gradient(-45deg, transparent 75%, #f0f8ff 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.canvas-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.canvas-header h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.canvas-header p {
+  color: #666;
+  margin: 0;
+}
+
+.empty-canvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  border: 2px dashed #ddd;
+  border-radius: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+.workflow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.workflow-step {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.workflow-step:hover {
+  border-color: #007bff;
+  transform: translateY(-1px);
+}
+
+.workflow-step.selected {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: #007bff;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.step-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.step-config {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.properties-panel {
+  width: 300px;
+  background: white;
+  border-left: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.properties-panel h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.properties-content {
+  color: #666;
+}
+
+.step-info {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.step-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.step-description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.property-form {
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.property-input,
+.property-select,
+.property-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.property-input:focus,
+.property-select:focus,
+.property-textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.property-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.step-actions {
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.delete-step-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.delete-step-btn:hover {
+  background: #c82333;
+}
+
+.no-selection {
+  text-align: center;
+  color: #666;
+}
+
+.help-tips {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.help-tips h5 {
+  margin: 0 0 0.75rem 0;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.help-tips ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.help-tips li {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .builder-header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .workflow-info {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .builder-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .cancel-btn,
+  .save-btn {
+    flex: 1;
+    max-width: none;
+    min-width: auto;
+  }
+  
+  .builder-content {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: auto;
+    max-height: 200px;
+  }
+  
+  .properties-panel {
+    width: auto;
+    max-height: 200px;
+  }
+}

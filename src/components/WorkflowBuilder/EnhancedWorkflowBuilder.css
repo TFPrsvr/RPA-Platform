@@ -1,0 +1,466 @@
+.enhanced-workflow-builder {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+}
+
+.builder-header {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.workflow-info {
+  flex: 1;
+  max-width: 400px;
+}
+
+.workflow-title {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  background: white;
+}
+
+.workflow-description {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+  font-family: inherit;
+  background: white;
+}
+
+.builder-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.builder-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Node Palette */
+.node-palette {
+  width: 280px;
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  padding: 1rem;
+  overflow-y: auto;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.node-palette h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.node-palette-section {
+  margin-bottom: 1rem;
+}
+
+.palette-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.palette-header:hover {
+  background: #e9ecef;
+}
+
+.palette-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.palette-toggle {
+  font-size: 0.8rem;
+}
+
+.palette-nodes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.palette-node {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: grab;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.palette-node:hover {
+  border-color: #007bff;
+  transform: translateX(2px);
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.1);
+}
+
+.palette-node.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+  transform: rotate(5deg);
+}
+
+.palette-node .node-icon {
+  font-size: 1.1rem;
+}
+
+.palette-node .node-name {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Workflow Canvas */
+.workflow-canvas {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: 
+    radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+  background-size: 20px 20px;
+  cursor: grab;
+}
+
+.workflow-canvas.drag-over {
+  background: 
+    radial-gradient(circle, #007bff 1px, transparent 1px),
+    linear-gradient(45deg, rgba(0, 123, 255, 0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0, 123, 255, 0.05) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(0, 123, 255, 0.05) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(0, 123, 255, 0.05) 75%);
+  background-size: 20px 20px, 40px 40px, 40px 40px, 40px 40px, 40px 40px;
+}
+
+.canvas-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.1s ease;
+}
+
+.canvas-empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #666;
+  pointer-events: none;
+}
+
+.canvas-empty-state h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.canvas-empty-state p {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* Workflow Nodes */
+.workflow-node {
+  position: absolute;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  min-width: 160px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform-origin: center;
+}
+
+.workflow-node:hover {
+  border-color: #007bff;
+  box-shadow: 0 4px 16px rgba(0, 123, 255, 0.15);
+}
+
+.workflow-node.selected {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+.workflow-node.dragging {
+  opacity: 0.8;
+  transform: rotate(2deg) scale(1.05);
+  z-index: 1000;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 10px 10px 0 0;
+}
+
+.node-header .node-icon {
+  font-size: 1.2rem;
+}
+
+.node-header .node-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.node-body {
+  padding: 0.75rem 1rem;
+}
+
+.node-config-status {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+.node-ports {
+  position: relative;
+}
+
+.input-port,
+.output-port {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #666;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.input-port {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.output-port {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.input-port:hover,
+.output-port:hover,
+.input-port.connectable,
+.output-port.connectable {
+  border-color: #007bff;
+  background: #007bff;
+  transform: translateY(-50%) scale(1.2);
+}
+
+.workflow-canvas.connecting {
+  cursor: crosshair;
+}
+
+.workflow-canvas.connecting .workflow-node {
+  opacity: 0.7;
+}
+
+.workflow-canvas.connecting .input-port.connectable,
+.workflow-canvas.connecting .output-port.connectable {
+  border-color: #28a745;
+  background: #28a745;
+  transform: translateY(-50%) scale(1.5);
+  box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+}
+
+.connections-layer {
+  pointer-events: all !important;
+}
+
+/* Configuration Panel */
+.config-panel {
+  width: 320px;
+  background: white;
+  border-left: 1px solid #e0e0e0;
+  overflow-y: auto;
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.config-panel-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+}
+
+.config-panel-empty h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.config-panel-content {
+  padding: 1.5rem;
+}
+
+.config-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.config-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.config-header p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.config-form {
+  margin-bottom: 2rem;
+}
+
+.config-field {
+  margin-bottom: 1.5rem;
+}
+
+.config-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.config-field input,
+.config-field textarea,
+.config-field select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.config-field input:focus,
+.config-field textarea:focus,
+.config-field select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.config-field textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: normal !important;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.config-actions {
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* Loading and Error States */
+.workflow-builder-loading,
+.workflow-builder-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.workflow-builder-error h2 {
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .builder-header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .workflow-info {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .builder-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .builder-content {
+    flex-direction: column;
+  }
+  
+  .node-palette,
+  .config-panel {
+    width: auto;
+    max-height: 200px;
+  }
+  
+  .workflow-canvas {
+    order: 2;
+  }
+  
+  .config-panel {
+    order: 3;
+  }
+}
