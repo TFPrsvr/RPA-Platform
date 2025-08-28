@@ -116,12 +116,6 @@ Organized documentation for developers, business users, configurations, and inte
 3. Run `npm install`
 4. Start development with `npm run dev`
 
-### Code Style
-- ESLint configuration
-- Consistent naming conventions
-- Professional file organization
-- JavaScript + JSX (no TypeScript)
-
 ## 🚀 Deployment
 
 ### Single Deployment

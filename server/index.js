@@ -85,6 +85,7 @@ import { WebSocketService } from './services/websocketService.js'
 // Import routes
 import { initializeRoutes as initializeWorkflowRoutes } from './routes/workflows.js'
 import { initializeRoutes as initializeOrganizationRoutes } from './routes/organizations.js'
+import browserSessionsRouter from './routes/browserSessions.js'
 
 // Initialize services
 const workflowEngine = new WorkflowEngine(supabase)
@@ -126,6 +127,7 @@ app.get('/health', (req, res) => {
 // API Routes
 app.use('/api/workflows', initializeWorkflowRoutes(supabase, workflowEngine, workflowScheduler))
 app.use('/api/organizations', initializeOrganizationRoutes(supabase))
+app.use('/api/browser-sessions', browserSessionsRouter)
 
 // Serve static files from the dist directory in production
 if (process.env.NODE_ENV === 'production') {
